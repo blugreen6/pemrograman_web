@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Pemutar Media Kuliah Responsif</title>
+
+  <link rel="stylesheet" href="03-tugas-style.css" />
+</head>
+
+<body>
+
+  <main class="page">
+
+    <!--HEADER-->
+    <header class="page__header">
+      <p class="page__eyebrow">
+        Materi Perkuliahan
+      </p>
+      <h1 class="page__title">
+        Basic Coding
+      </h1>
+      <p class="page__subtitle">
+        Selamat datang di portal pembelajaran coding. Akses modul
+        interaktif video, rekaman kuliah, dan materi penunjang di bawah ini.
+      </p>
+    </header>
+
+
+    <h2 class="page__section-title">
+      Daftar Video Pembelajaran
+    </h2>
+
+
+    <!--DAFTAR MEDIA CARD-->
+    <div class="card-grid">
+
+      <!--KARTU 1 : BASIC JAVASCRIPT-->
+      <article class="media-card">
+        <div class="media-card__cover">
+          <picture>
+            <source
+              srcset="images/cover-javascript.webp"
+              media="(min-width: 900px)"
+              type="image/webp"
+            />
+            <source
+              srcset="images/cover-javascript.webp"
+              media="(min-width: 500px)"
+              type="image/webp"
+            />
+            <img
+              src="images/cover-javascript.jpg"
+              alt="Ilustrasi materi Basic JavaScript"
+              class="media-card__img"
+              loading="lazy"
+            />
+          </picture>
+          <span class="media-card__duration">
+            12:45
+          </span>
+          <span class="media-card__badge">
+            JavaScript
+          </span>
+        </div>
+
+
+        <!--Isi kartu-->
+        <div class="media-card__body">
+          <h3 class="media-card__title">
+            Basic JavaScript
+          </h3>
+          <p class="media-card__desc">
+            Pelajari bagaimana konsep dasar pemrograman JavaScript
+            dibangun, mulai dari variabel, tipe data, hingga struktur
+            kontrol yang jadi fondasi interaktivitas web modern.
+          </p>
+
+          <!--VIDEO JAVASCRIPT-->
+          <video
+            class="media-card__video"
+            controls
+            preload="metadata"
+            poster="images/cover-javascript.jpg"
+          >
+            <source
+              src="media/video-javascript.webm"
+              type="video/webm"
+            />
+            <source
+              src="media/video-javascript.mp4"
+              type="video/mp4"
+            />
+            Maaf, peramban Anda tidak mendukung pemutaran video.
+            <a href="media/video-javascript.mp4">
+              Unduh video di sini
+            </a>.
+          </video>
+
+          <!--AUDIO JAVASCRIPT-->
+          <div class="media-card__audio-row">
+            <span class="media-card__audio-label">
+              🎧 Rekaman Kuliah
+            </span>
+            <audio
+              class="media-card__audio"
+              controls
+              preload="none"
+            >
+              <source
+                src="media/audio-latar-javascript.mp3"
+                type="audio/mpeg"
+              />
+              Maaf, peramban Anda tidak mendukung pemutaran audio.
+            </audio>
+          </div>
+          <a
+            href="#"
+            class="media-card__cta"
+          >
+            Mulai Belajar →
+          </a>
+        </div>
+      </article>
+
+
+      <!--KARTU 2 : BASIC PYTHON-->
+      <article class="media-card media-card--live">
+        <div class="media-card__cover">
+          <picture>
+            <source
+              srcset="images/cover-python.webp"
+              media="(min-width: 900px)"
+              type="image/webp"
+            />
+            <source
+              srcset="images/cover-python.webp"
+              media="(min-width: 500px)"
+              type="image/webp"
+            />
+            <img
+              src="images/cover-python.jpg"
+              alt="Ilustrasi materi Basic Python"
+              class="media-card__img"
+              loading="lazy"
+            />
+          </picture>
+          <span class="media-card__duration">
+            18:20
+          </span>
+          <span class="media-card__badge">
+            Python
+          </span>
+        </div>
+
+
+        <!--Isi kartu-->
+        <div class="media-card__body">
+          <h3 class="media-card__title">
+            Basic Python
+          </h3>
+          <p class="media-card__desc">
+            Sesi ini sedang berlangsung secara langsung. Pahami rumus
+            legendaris Pythagoras lewat visualisasi grafis interaktif
+            yang sangat mudah dipahami pemula.
+          </p>
+
+          <!--VIDEO PYTHON-->
+          <video
+            class="media-card__video"
+            controls
+            preload="metadata"
+            poster="images/cover-python.jpg"
+          >
+            <source
+              src="media/video-python.webm"
+              type="video/webm"
+            />
+            <source
+              src="media/video-python.mp4"
+              type="video/mp4"
+            />
+            Maaf, peramban Anda tidak mendukung pemutaran video.
+            <a href="media/video-python.mp4">
+              Unduh video di sini
+            </a>.
+          </video>
+
+
+          <!--AUDIO PYTHON-->
+          <div class="media-card__audio-row">
+            <span class="media-card__audio-label">
+              🎧 Rekaman Kuliah
+            </span>
+            <audio
+              class="media-card__audio"
+              controls
+              preload="none"
+            >
+              <source
+                src="media/audio-latar-python.mp3"
+                type="audio/mpeg"
+              />
+              Maaf, peramban Anda tidak mendukung pemutaran audio.
+            </audio>
+          </div>
+
+          <a
+            href="#"
+            class="media-card__cta"
+          >
+            Mulai Belajar →
+          </a>
+        </div>
+
+      </article>
+
+    </div>
+
+  </main>
+
+</body>
+
+</html>

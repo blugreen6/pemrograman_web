@@ -1,0 +1,312 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family:
+    "Segoe UI",
+    Roboto,
+    "Helvetica Neue",
+    Arial,
+    sans-serif;
+  line-height: 1.5;
+  color: #1f2933;
+  background-color: #f4f6fb;
+  min-height: 100vh;
+}
+
+/*Elemen media agar tidak melebihi container*/
+img,
+video,
+audio {
+  max-width: 100%;
+  display: block;
+}
+
+picture {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/*LAYOUT HALAMAN*/
+.page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2.5rem 1.25rem 4rem;
+}
+
+/*HEADER*/
+.page__header {
+  background-image:
+    linear-gradient(
+      180deg,
+      rgba(13, 30, 56, 0.55),
+      rgba(13, 30, 56, 0.25)
+    ),
+    url("images/banner-cpp.png");
+  background-size: cover;
+  background-position: center;
+  border-radius: 16px;
+  padding: 3rem 1.75rem;
+  margin-bottom: 2rem;
+  min-height: 220px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.page__eyebrow {
+  display: inline-block;
+  align-self: flex-start;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: #102a43;
+  background-color: #ffffff;
+  padding: 0.35rem 0.9rem;
+  border-radius: 999px;
+  margin-bottom: 0.75rem;
+}
+
+.page__title {
+  font-size: clamp(
+    1.5rem,
+    1rem + 2vw,
+    2.25rem
+  );
+  color: #ffffff;
+  text-shadow:
+    0 2px 6px rgba(0, 0, 0, 0.35);
+  margin-bottom: 0.5rem;
+}
+
+.page__subtitle {
+  font-size: 0.95rem;
+  color: #e8f2fd;
+  text-shadow:
+    0 1px 4px rgba(0, 0, 0, 0.3);
+  max-width: 60ch;
+}
+
+.page__section-title {
+  font-size: 1.15rem;
+  color: #102a43;
+  margin-bottom: 1.1rem;
+}
+
+
+/*CARD GRID*/
+.card-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.75rem;
+}
+
+
+/*MEDIA CARD*/
+.media-card {
+  width: 100%;
+  max-width: 520px;
+  margin: 0 auto;
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow:
+    0 4px 12px rgba(15, 34, 58, 0.1);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+
+/*CARD HOVER*/
+.media-card:hover,
+.media-card:focus-within {
+  transform: translateY(-6px);
+  box-shadow:
+    0 14px 26px rgba(15, 34, 58, 0.16);
+}
+
+
+/*COVER*/
+.media-card__cover {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background-color: #d9e2ec;
+}
+
+
+/* Gambar cover */
+.media-card__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition:
+    transform 0.35s ease;
+}
+
+.media-card:hover .media-card__img {
+  transform: scale(1.05);
+}
+
+
+/*DURASI VIDEO*/
+.media-card__duration {
+  position: absolute;
+  right: 0.6rem;
+  bottom: 0.6rem;
+  background-color:
+    rgba(15, 23, 42, 0.75);
+  color: #ffffff;
+  font-size: 0.75rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 6px;
+}
+
+/*BADGE KATEGORI*/
+
+.media-card__badge {
+  position: absolute;
+  left: 0.6rem;
+  bottom: 0.6rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: #ffffff;
+  background-color: #2b6cb0;
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+}
+
+
+/*CARD BODY*/
+.media-card__body {
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  flex: 1;
+}
+
+
+/*Judul*/
+.media-card__title {
+  font-size: 1.1rem;
+  color: #102a43;
+}
+
+/*Deskripsi biasa*/
+.media-card__desc {
+  font-size: 0.9rem;
+  color: #627d98;
+}
+
+
+/*VIDEO PLAYER*/
+.media-card__video {
+  width: 100%;
+  border-radius: 10px;
+  background-color: #000000;
+}
+
+
+/*AUDIO PLAYER*/
+.media-card__audio-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.media-card__audio-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #334e68;
+}
+
+.media-card__audio {
+  width: 100%;
+}
+
+
+/*CTA*/
+.media-card__cta {
+  align-self: flex-start;
+  margin-top: 0.25rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #2b6cb0;
+  transition:
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.media-card__cta:hover {
+  color: #1a4971;
+  transform: translateX(3px);
+}
+
+
+/*SPECIFICITY*/
+.media-card--live .media-card__desc {
+  color: #9b2c2c;
+  font-weight: 600;
+  position: relative;
+  padding-left: 1.1rem;
+}
+
+
+/*Indikator titik merah pada status live*/
+
+.media-card--live .media-card__desc::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.4rem;
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 50%;
+  background-color: #e53e3e;
+}
+
+
+/*RESPONSIVE*/
+
+@media (max-width: 480px) {
+
+  .page {
+    padding: 1.5rem 1rem 3rem;
+  }
+
+  .page__header {
+    padding: 1.75rem 1.25rem;
+
+    min-height: 160px;
+  }
+
+  .media-card__body {
+    padding: 1rem;
+  }
+
+}
