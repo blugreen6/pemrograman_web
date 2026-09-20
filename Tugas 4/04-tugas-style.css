@@ -1,70 +1,70 @@
 /* Variabel Dasar */
 :root {
---warna-primer: #1d3557;
---warna-aksen: #457b9d;
---warna-bg-lembut: #f1faee;
---lebar-sidebar: 200px;
---lebar-kolom-kanan: 220px;
+  --warna-primer: #1d3557;
+  --warna-aksen: #457b9d;
+  --warna-bg-lembut: #f1faee;
+  --lebar-sidebar: 200px;
+  --lebar-kolom-kanan: 220px;
 }
 
 * {
-box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 body {
-font-family: "Segoe UI", Arial, sans-serif;
-background-color: #f8f9fa;
-margin: 0;
+  font-family: "Segoe UI", Arial, sans-serif;
+  background-color: #f8f9fa;
+  margin: 0;
 }
 
 /* NAVBAR (Flexbox murni) */
 .site-header {
-background-color: var(--warna-primer);
-position: sticky;
-top: 0;
-z-index: 1000;
+  background-color: var(--warna-primer);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 }
 
 .navbar-flex {
-display: flex;
-align-items: center;
-justify-content: space-between;
-padding: 0.75rem 1.5rem;
-flex-wrap: wrap;
-position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1.5rem;
+  flex-wrap: wrap;
+  position: relative;
 }
 
 .brand {
-color: #fff;
-font-weight: 700;
-font-size: 1.25rem;
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.25rem;
 }
 
 .brand span {
-color: #a8dadc;
-font-weight: 400;
+  color: #a8dadc;
+  font-weight: 400;
 }
 
 .nav-links {
-display: flex;
-list-style: none;
-gap: 1.25rem;
-margin: 0;
-padding: 0;
+  display: flex;
+  list-style: none;
+  gap: 1.25rem;
+  margin: 0;
+  padding: 0;
 }
 
 .nav-links a {
-color: #f1faee;
-text-decoration: none;
-font-size: 0.95rem;
-transition: color 0.2s ease;
+  color: #f1faee;
+  text-decoration: none;
+  font-size: 0.95rem;
+  transition: color 0.2s ease;
 }
 
 .nav-links a:hover {
-color: #a8dadc;
+  color: #a8dadc;
 }
 
-/* Toggle checkbox & label disembunyikan */
+/* Toggle checkbox & label disembunyikan di layar lebar */
 .nav-toggle-checkbox {
   display: none;
 }
@@ -115,7 +115,7 @@ color: #a8dadc;
   }
 }
 
-/* LAYOUT UTAMA */
+/* LAYOUT UTAMA (CSS Grid 3 kolom) */
 .layout-grid {
   display: grid;
   grid-template-columns: var(--lebar-sidebar) 1fr var(--lebar-kolom-kanan);
@@ -160,7 +160,7 @@ color: #a8dadc;
   min-width: 0;
 }
 
-/* Grid mikro kartu artikel */
+/* Grid mikro kartu artikel: auto-fit + minmax */
 .article-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -190,7 +190,7 @@ color: #a8dadc;
 }
 
 .widget {
-  background-color: #fff;
+  background-color: var(--warna-bg-lembut);
   border-radius: 0.5rem;
   padding: 1rem;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
@@ -202,7 +202,7 @@ color: #a8dadc;
   margin-bottom: 0.5rem;
 }
 
-/* RESPONSIVE — TABLET (768px – 991px) */
+/* RESPONSIVE — TABLET (768px - 991px): kolom kanan turun ke bawah */
 @media (max-width: 991.98px) {
   .layout-grid {
     grid-template-columns: var(--lebar-sidebar) 1fr;
@@ -225,7 +225,7 @@ color: #a8dadc;
   }
 }
 
-/* RESPONSIVE — PONSEL (< 768px) */
+/* RESPONSIVE — PONSEL (< 768px): seluruh layout bertumpuk satu kolom */
 @media (max-width: 767.98px) {
   .layout-grid {
     grid-template-columns: 1fr;
