@@ -1,5 +1,6 @@
+/* Variabel Dasar */
 :root {
---warna-primer: #94b9e6;
+--warna-primer: #1d3557;
 --warna-aksen: #457b9d;
 --warna-bg-lembut: #f1faee;
 --lebar-sidebar: 200px;
@@ -16,6 +17,7 @@ background-color: #f8f9fa;
 margin: 0;
 }
 
+/* NAVBAR (Flexbox murni) */
 .site-header {
 background-color: var(--warna-primer);
 position: sticky;
@@ -62,7 +64,7 @@ transition: color 0.2s ease;
 color: #a8dadc;
 }
 
-/* Toggle checkbox & label (hamburger) disembunyikan di layar lebar */
+/* Toggle checkbox & label disembunyikan */
 .nav-toggle-checkbox {
   display: none;
 }
@@ -84,7 +86,7 @@ color: #a8dadc;
   border-radius: 2px;
 }
 
-/* Mode ponsel: tampilkan hamburger, ubah menu jadi vertikal */
+/* Mode ponsel: mengubah menu menjadi vertikal */
 @media (max-width: 767.98px) {
   .nav-toggle-label {
     display: flex;
@@ -111,4 +113,91 @@ color: #a8dadc;
   .nav-toggle-checkbox:checked ~ .nav-links {
     display: flex;
   }
+}
+
+/* LAYOUT UTAMA */
+.layout-grid {
+  display: grid;
+  grid-template-columns: var(--lebar-sidebar) 1fr var(--lebar-kolom-kanan);
+  gap: 1.25rem;
+  padding: 1.5rem;
+  align-items: start;
+}
+
+/* Sidebar Kiri */
+.sidebar {
+  background-color: #fff;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+  position: sticky;
+  top: 80px;
+}
+
+.sidebar-title {
+  color: var(--warna-primer);
+  font-weight: 600;
+  border-bottom: 2px solid var(--warna-aksen);
+  padding-bottom: 0.4rem;
+}
+
+.sidebar-list li {
+  margin-bottom: 0.5rem;
+}
+
+.sidebar-list a {
+  color: #333;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.sidebar-list a:hover {
+  color: var(--warna-aksen);
+}
+
+/* Kolom Tengah: Daftar Artikel */
+.article-list {
+  min-width: 0;
+}
+
+/* Grid mikro kartu artikel */
+.article-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+}
+
+.article-card {
+  height: 100%;
+  border: none;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.article-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+}
+
+.article-card .card-title {
+  color: var(--warna-primer);
+  font-weight: 600;
+}
+
+/* Kolom Kanan */
+.right-column {
+  align-self: start;
+}
+
+.widget {
+  background-color: #fff;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+}
+
+.widget-title {
+  color: var(--warna-primer);
+  font-weight: 600;
+  margin-bottom: 0.5rem;
 }
