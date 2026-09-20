@@ -1,0 +1,114 @@
+:root {
+--warna-primer: #94b9e6;
+--warna-aksen: #457b9d;
+--warna-bg-lembut: #f1faee;
+--lebar-sidebar: 200px;
+--lebar-kolom-kanan: 220px;
+}
+
+* {
+box-sizing: border-box;
+}
+
+body {
+font-family: "Segoe UI", Arial, sans-serif;
+background-color: #f8f9fa;
+margin: 0;
+}
+
+.site-header {
+background-color: var(--warna-primer);
+position: sticky;
+top: 0;
+z-index: 1000;
+}
+
+.navbar-flex {
+display: flex;
+align-items: center;
+justify-content: space-between;
+padding: 0.75rem 1.5rem;
+flex-wrap: wrap;
+position: relative;
+}
+
+.brand {
+color: #fff;
+font-weight: 700;
+font-size: 1.25rem;
+}
+
+.brand span {
+color: #a8dadc;
+font-weight: 400;
+}
+
+.nav-links {
+display: flex;
+list-style: none;
+gap: 1.25rem;
+margin: 0;
+padding: 0;
+}
+
+.nav-links a {
+color: #f1faee;
+text-decoration: none;
+font-size: 0.95rem;
+transition: color 0.2s ease;
+}
+
+.nav-links a:hover {
+color: #a8dadc;
+}
+
+/* Toggle checkbox & label (hamburger) disembunyikan di layar lebar */
+.nav-toggle-checkbox {
+  display: none;
+}
+
+.nav-toggle-label {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 26px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.nav-toggle-label span {
+  display: block;
+  height: 3px;
+  width: 100%;
+  background-color: #fff;
+  border-radius: 2px;
+}
+
+/* Mode ponsel: tampilkan hamburger, ubah menu jadi vertikal */
+@media (max-width: 767.98px) {
+  .nav-toggle-label {
+    display: flex;
+  }
+
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    gap: 0;
+    background-color: var(--warna-primer);
+  }
+
+  .nav-links li {
+    width: 100%;
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+  }
+
+  .nav-links a {
+    display: block;
+    padding: 0.75rem 0.5rem;
+  }
+
+  .nav-toggle-checkbox:checked ~ .nav-links {
+    display: flex;
+  }
+}
