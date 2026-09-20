@@ -201,3 +201,42 @@ color: #a8dadc;
   font-weight: 600;
   margin-bottom: 0.5rem;
 }
+
+/* RESPONSIVE — TABLET (768px – 991px) */
+@media (max-width: 991.98px) {
+  .layout-grid {
+    grid-template-columns: var(--lebar-sidebar) 1fr;
+    grid-template-areas:
+      "sidebar artikel"
+      "kanan   kanan";
+  }
+
+  .sidebar {
+    grid-area: sidebar;
+  }
+
+  .article-list {
+    grid-area: artikel;
+  }
+
+  .right-column {
+    grid-area: kanan;
+    position: static;
+  }
+}
+
+/* RESPONSIVE — PONSEL (< 768px) */
+@media (max-width: 767.98px) {
+  .layout-grid {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "sidebar"
+      "artikel"
+      "kanan";
+    padding: 1rem;
+  }
+
+  .sidebar {
+    position: static;
+  }
+}
