@@ -20,6 +20,7 @@ if (empty($_SESSION['csrf_token'])) {
 }
 
 $errors = [];
+$successMessage = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $postToken = $_POST['csrf_token'] ?? '';
@@ -49,6 +50,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
+    if (empty($errors)) {
+        try {
+            $transaction = new Transaction((int) $_SESSION['next_id'], $type, $amount);
+            $newBalance  = $transaction->process((float) $_SESSION['balance']);
+
+            $_SESSION['balance'] = $newBalance;
+            $_SESSION['history'][] = $transaction->toArray();
+            $_SESSION['next_id']++;
+
+            $successMessage = 'Transaksi berhasil diproses.';
+        } catch (RuntimeException | InvalidArgumentException $e) {
+            $errors[] = $e->getMessage();
+        }
+    }
 }
 
 $balance   = (float) $_SESSION['balance'];
@@ -70,6 +85,10 @@ $csrfToken = htmlspecialchars($_SESSION['csrf_token'], ENT_QUOTES, 'UTF-8');
                 <li><?= htmlspecialchars($error, ENT_QUOTES, 'UTF-8') ?></li>
             <?php endforeach; ?>
         </ul>
+    <?php endif; ?>
+
+    <?php if ($successMessage !== ''): ?>
+        <p><?= htmlspecialchars($successMessage, ENT_QUOTES, 'UTF-8') ?></p>
     <?php endif; ?>
 
     <form method="post" action="">
