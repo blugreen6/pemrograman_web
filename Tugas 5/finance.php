@@ -27,5 +27,20 @@ $balance = (float) $_SESSION['balance'];
 <body>
     <h1>Sistem Manajemen Keuangan Sederhana</h1>
     <p>Saldo saat ini: Rp <?= htmlspecialchars(number_format($balance, 2, ',', '.'), ENT_QUOTES, 'UTF-8') ?></p>
+    
+    <form method="post" action="">
+        <input type="hidden" name="csrf_token" value="<?= $csrfToken ?>">
+
+        <label for="type">Jenis Transaksi</label>
+        <select name="type" id="type" required>
+            <option value="deposit">Deposit</option>
+            <option value="penarikan">Penarikan</option>
+        </select>
+
+        <label for="amount">Jumlah (Rp)</label>
+        <input type="text" name="amount" id="amount" placeholder="Contoh: 150000.00" required>
+
+        <button type="submit">Proses Transaksi</button>
+    </form>
 </body>
 </html>
