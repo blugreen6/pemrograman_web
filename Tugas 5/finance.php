@@ -15,8 +15,44 @@ if (!isset($_SESSION['history'])) {
 if (!isset($_SESSION['next_id'])) {
     $_SESSION['next_id'] = 1;
 }
+if (empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
 
-$balance = (float) $_SESSION['balance'];
+$errors = [];
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $postToken = $_POST['csrf_token'] ?? '';
+    if (!hash_equals($_SESSION['csrf_token'], $postToken)) {
+        die('Kesalahan Keamanan: Token CSRF tidak cocok.');
+    }
+
+    $rawType   = $_POST['type'] ?? '';
+    $rawAmount = $_POST['amount'] ?? '';
+
+    $type = match ($rawType) {
+        'deposit', 'penarikan' => $rawType,
+        default => null,
+    };
+
+    if ($type === null) {
+        $errors[] = 'Jenis transaksi tidak valid.';
+    }
+
+    $amount = null;
+    if (!is_string($rawAmount) || $rawAmount === '' || !preg_match('/^\d+(\.\d{1,2})?$/', $rawAmount)) {
+        $errors[] = 'Jumlah transaksi harus berupa angka desimal positif (contoh: 150000 atau 150000.50).';
+    } else {
+        $amount = (float) $rawAmount;
+        if ($amount <= 0) {
+            $errors[] = 'Jumlah transaksi harus lebih besar dari nol.';
+        }
+    }
+
+}
+
+$balance   = (float) $_SESSION['balance'];
+$csrfToken = htmlspecialchars($_SESSION['csrf_token'], ENT_QUOTES, 'UTF-8');
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -27,7 +63,15 @@ $balance = (float) $_SESSION['balance'];
 <body>
     <h1>Sistem Manajemen Keuangan Sederhana</h1>
     <p>Saldo saat ini: Rp <?= htmlspecialchars(number_format($balance, 2, ',', '.'), ENT_QUOTES, 'UTF-8') ?></p>
-    
+
+    <?php if (!empty($errors)): ?>
+        <ul>
+            <?php foreach ($errors as $error): ?>
+                <li><?= htmlspecialchars($error, ENT_QUOTES, 'UTF-8') ?></li>
+            <?php endforeach; ?>
+        </ul>
+    <?php endif; ?>
+
     <form method="post" action="">
         <input type="hidden" name="csrf_token" value="<?= $csrfToken ?>">
 
