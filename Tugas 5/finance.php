@@ -60,36 +60,59 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['next_id']++;
 
             $successMessage = 'Transaksi berhasil diproses.';
+
+            // Regenerasi token CSRF setelah sukses untuk keamanan tambahan
+            $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
         } catch (RuntimeException | InvalidArgumentException $e) {
             $errors[] = $e->getMessage();
         }
     }
 }
 
-$balance   = (float) $_SESSION['balance'];
 $csrfToken = htmlspecialchars($_SESSION['csrf_token'], ENT_QUOTES, 'UTF-8');
+$balance   = (float) $_SESSION['balance'];
 $history   = $_SESSION['history'];
 ?>
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Sistem Manajemen Keuangan Sederhana</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 640px; margin: 40px auto; padding: 0 16px; color: #222; }
+        h1 { font-size: 1.4rem; }
+        .balance { font-size: 1.1rem; margin: 16px 0; }
+        .error, .success { list-style: none; padding: 10px 14px; border-radius: 6px; margin: 10px 0; }
+        .error { background: #fdecea; color: #b00020; }
+        .success { background: #e8f5e9; color: #1b5e20; }
+        form { border: 1px solid #ddd; padding: 16px; border-radius: 8px; margin-bottom: 24px; }
+        label { display: block; margin-top: 12px; font-weight: bold; }
+        select, input[type=text] { width: 100%; padding: 8px; margin-top: 4px; box-sizing: border-box; }
+        button { margin-top: 16px; padding: 10px 18px; cursor: pointer; }
+        table { width: 100%; border-collapse: collapse; margin-top: 12px; }
+        th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+        th { background: #f5f5f5; }
+    </style>
 </head>
 <body>
     <h1>Sistem Manajemen Keuangan Sederhana</h1>
-    <p>Saldo saat ini: Rp <?= htmlspecialchars(number_format($balance, 2, ',', '.'), ENT_QUOTES, 'UTF-8') ?></p>
+
+    <p class="balance">
+        Saldo saat ini:
+        <strong>Rp <?= htmlspecialchars(number_format($balance, 2, ',', '.'), ENT_QUOTES, 'UTF-8') ?></strong>
+    </p>
 
     <?php if (!empty($errors)): ?>
         <ul>
             <?php foreach ($errors as $error): ?>
-                <li><?= htmlspecialchars($error, ENT_QUOTES, 'UTF-8') ?></li>
+                <li class="error"><?= htmlspecialchars($error, ENT_QUOTES, 'UTF-8') ?></li>
             <?php endforeach; ?>
         </ul>
     <?php endif; ?>
 
     <?php if ($successMessage !== ''): ?>
-        <p><?= htmlspecialchars($successMessage, ENT_QUOTES, 'UTF-8') ?></p>
+        <p class="success"><?= htmlspecialchars($successMessage, ENT_QUOTES, 'UTF-8') ?></p>
     <?php endif; ?>
 
     <form method="post" action="">
@@ -107,11 +130,11 @@ $history   = $_SESSION['history'];
         <button type="submit">Proses Transaksi</button>
     </form>
 
-        <h2>Riwayat Transaksi</h2>
+    <h2>Riwayat Transaksi</h2>
     <?php if (empty($history)): ?>
         <p>Belum ada transaksi.</p>
     <?php else: ?>
-        <table border="1" cellpadding="6">
+        <table>
             <thead>
                 <tr>
                     <th>ID</th>
