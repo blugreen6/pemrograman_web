@@ -94,3 +94,49 @@ Ketergantungan transitif dihilangkan. Atribut penerbit pada tabel `buku` dipisah
 | BK002 | Sistem Utilitas Bangunan untuk Arsitek | Sugeng Triyadi & Andi Harapan | PN02 |
  
 Skema kini memenuhi 3NF: tidak ada redundansi yang tidak perlu — perubahan nama penerbit cukup dilakukan pada satu baris di tabel `penerbit`, dan tidak ada atribut non-kunci yang bergantung pada atribut non-kunci lainnya.
+
+---
+
+## 3. Rancangan Tabel Akhir (Tipe Data & Kunci)
+
+### 3.1 Tabel Mahasiswa
+| Kolom | Tipe Data | Keterangan |
+|---|---|---|
+| nim | VARCHAR(20) | **Primary Key** |
+| nama_mahasiswa | VARCHAR(50) | NOT NULL |
+| jurusan | VARCHAR(50) | NOT NULL |
+| no_telepon | VARCHAR(20) | NULL diizinkan |
+
+### 3.2 Tabel Penerbit
+| Kolom | Tipe Data | Keterangan |
+|---|---|---|
+| kode_penerbit | VARCHAR(20) | **Primary Key** |
+| nama_penerbit | VARCHAR(50) | NOT NULL |
+| alamat | VARCHAR(50) | NULL diizinkan |
+| no_telepon | VARCHAR(20) | NULL diizinkan |
+
+### 3.3 Tabel Buku
+| Kolom | Tipe Data | Keterangan |
+|---|---|---|
+| kode_buku | VARCHAR(20) | **Primary Key** |
+| judul | VARCHAR(100) | NOT NULL |
+| penulis | VARCHAR(50) | NOT NULL |
+| kode_penerbit | VARCHAR(20) | **Foreign Key** → `penerbit.kode_penerbit` |
+
+### 3.4 Tabel Peminjaman
+| Kolom | Tipe Data | Keterangan |
+|---|---|---|
+| id_peminjaman | INT | **Primary Key**, AUTO_INCREMENT |
+| nim | VARCHAR(20) | **Foreign Key** → `mahasiswa.nim` |
+| kode_buku | VARCHAR(20) | **Foreign Key** → `buku.kode_buku` |
+| tanggal_pinjam | DATE | NOT NULL |
+| tanggal_jatuh_tempo | DATE | NOT NULL |
+| tanggal_dikembalikan | DATE | NULL diizinkan (NULL = buku belum dikembalikan) |
+| status | ENUM | ('dipinjam', 'dikembalikan') NOT NULL, DEFAULT 'dipinjam' |
+
+**Aturan Integritas Referensial (*Referential Integrity*)**
+| Foreign Key | Aturan | Alasan |
+| :--- | :--- | :--- |
+| `buku.kode_penerbit` | **RESTRICT** | Mencegah penghapusan entitas penerbit selama masih ada buku yang terdaftar atas penerbit tersebut. |
+| `peminjaman.nim` | **RESTRICT** | Riwayat peminjaman bersifat historis. *RESTRICT* mencegah terhapusnya data operasional perpustakaan apabila terjadi penghapusan data mahasiswa secara tidak sengaja. |
+| `peminjaman.kode_buku` | **RESTRICT** | Mencegah penghapusan buku yang masih memiliki riwayat peminjaman demi kebutuhan audit sistem. |
