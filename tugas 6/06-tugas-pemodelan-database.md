@@ -148,40 +148,41 @@ Skema kini memenuhi 3NF: tidak ada redundansi yang tidak perlu — perubahan nam
 ### 4.1 Diagram Mermaid
 ```mermaid
 erDiagram
-    MAHASISWA ||--o{ PEMINJAMAN : "melakukan"
-    BUKU ||--o{ PEMINJAMAN : "dipinjam_dalam"
-    PENERBIT ||--o{ BUKU : "menerbitkan"
-
+    MAHASISWA ||--o{ PEMINJAMAN : melakukan
+    BUKU ||--o{ PEMINJAMAN : dipinjam_dalam
+    PENERBIT ||--o{ BUKU : menerbitkan
     MAHASISWA {
-        VARCHAR(20) nim PK
-        VARCHAR(50) nama_mahasiswa
-        VARCHAR(50) jurusan
-        VARCHAR(20) no_telepon
+        VARCHAR_20 nim PK
+        VARCHAR_50 nama_mahasiswa
+        VARCHAR_50 jurusan
+        VARCHAR_20 no_telepon
     }
     PENERBIT {
-        VARCHAR(20) kode_penerbit PK
-        VARCHAR(50) nama_penerbit
-        VARCHAR(50) alamat
-        VARCHAR(20) no_telepon
+        VARCHAR_20 kode_penerbit PK
+        VARCHAR_50 nama_penerbit
+        VARCHAR_50 alamat
+        VARCHAR_20 no_telepon
     }
     BUKU {
-        VARCHAR(20) kode_buku PK
-        VARCHAR(100) judul
-        VARCHAR(50) penulis
-        VARCHAR(20) kode_penerbit FK
+        VARCHAR_20 kode_buku PK
+        VARCHAR_100 judul
+        VARCHAR_50 penulis
+        VARCHAR_20 kode_penerbit FK
     }
     PEMINJAMAN {
         INT id_peminjaman PK
-        VARCHAR(20) nim FK
-        VARCHAR(20) kode_buku FK
+        VARCHAR_20 nim FK
+        VARCHAR_20 kode_buku FK
         DATE tanggal_pinjam
         DATE tanggal_jatuh_tempo
         DATE tanggal_dikembalikan
         ENUM status
     }
+```
 
 ### 4.2 Daigram Alur Teks
 
+```
 penerbit
   kode_penerbit (PK) ......... nama_penerbit, alamat, no_telepon
         ^
@@ -200,3 +201,4 @@ peminjaman
         v
 mahasiswa
   nim (PK) .................... nama_mahasiswa, jurusan, no_telepon
+```
