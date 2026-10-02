@@ -202,3 +202,19 @@ peminjaman
 mahasiswa
   nim (PK) .................... nama_mahasiswa, jurusan, no_telepon
 ```
+
+Penjelasan Diagram:
+
+1. Tabel peminjaman diimplementasikan sebagai entitas penghubung (junction table) dengan Primary Key independen (id_peminjaman) untuk menangani relasi Many-to-Many antara mahasiswa dan buku.
+
+2. Relasi antara penerbit dan buku menggunakan notasi zero-or-many, menandakan bahwa data penerbit dapat diinput ke dalam sistem meskipun buku terbitannya belum tersedia.
+
+3. Garis relasi (Foreign Key) memaksakan aturan integritas sehingga ID yang dimasukkan ke tabel anak harus sudah terdaftar pada tabel induk.
+
+4. Operasi penghapusan pada relasi induk-anak dibatasi (RESTRICT) untuk menjaga kekonsistenan data historis jangka panjang.
+
+---
+
+## 5. Penutup
+
+Rancangan akhir sistem E-Library ini menghasilkan empat tabel yang ternormalisasi (Mahasiswa, Penerbit, Buku, Peminjaman). Skema ini telah memenuhi bentuk normal ketiga (3NF) sehingga terbebas dari anomali sisip, hapus, dan ubah. Penggunaan kunci primer yang independen, pemisahan data turunan, serta penerapan aturan integritas referensial (RESTRICT) memastikan bahwa basis data akan tetap konsisten, efisien, dan aman untuk operasional jangka panjang perpustakaan.
