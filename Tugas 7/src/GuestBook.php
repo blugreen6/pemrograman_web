@@ -11,6 +11,21 @@ class GuestBook
         $this->pdo = $pdo;
     }
 
+    /* Menyimpan satu pesan */
+    public function save(string $nama, string $email, string $pesan): bool
+    {
+        $sql = "INSERT INTO buku_tamu (nama, email, pesan, tanggal_kirim)
+                VALUES (:nama, :email, :pesan, NOW())";
+
+        $stmt = $this->pdo->prepare($sql);
+
+        return $stmt->execute([
+            'nama'  => trim($nama),
+            'email' => trim($email),
+            'pesan' => trim($pesan),
+        ]);
+    }
+
     /* Mengambil daftar pesan terbaru */
     public function getAll(int $limit = 100): array
     {
