@@ -1,6 +1,8 @@
 <?php
 declare(strict_types=1);
 
+session_start();
+
 require_once __DIR__ . '/src/GuestBook.php';
 
 /* Koneksi PDO */
@@ -29,24 +31,37 @@ try {
 
 $guestBook = new GuestBook($pdo);
 
+/* Token CSRF */
+if (empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+
 $errors = [];
 $old    = ['nama' => '', 'email' => '', 'pesan' => ''];
 
 /* Proses form */
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $old = [
-        'nama'  => (string) ($_POST['nama']  ?? ''),
-        'email' => (string) ($_POST['email'] ?? ''),
-        'pesan' => (string) ($_POST['pesan'] ?? ''),
-    ];
+    $token = (string) ($_POST['csrf_token'] ?? '');
 
-    $errors = $guestBook->validate($old['nama'], $old['email'], $old['pesan']);
+    if (!hash_equals($_SESSION['csrf_token'], $token)) {
+        http_response_code(403);
+        $errors['umum'] = 'Token CSRF tidak valid. Muat ulang halaman lalu coba lagi.';
+    } else {
+        $old = [
+            'nama'  => (string) ($_POST['nama']  ?? ''),
+            'email' => (string) ($_POST['email'] ?? ''),
+            'pesan' => (string) ($_POST['pesan'] ?? ''),
+        ];
 
-    if (!$errors) {
-        $guestBook->save($old['nama'], $old['email'], $old['pesan']);
+        $errors = $guestBook->validate($old['nama'], $old['email'], $old['pesan']);
 
-        header('Location: ' . strtok($_SERVER['REQUEST_URI'], '?'));
-        exit;
+        if (!$errors) {
+            $guestBook->save($old['nama'], $old['email'], $old['pesan']);
+
+            $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+            header('Location: ' . strtok($_SERVER['REQUEST_URI'], '?'));
+            exit;
+        }
     }
 }
 
@@ -63,7 +78,13 @@ $messages = $guestBook->getAll();
 <body>
     <h1>Buku Tamu Perpustakaan</h1>
 
+    <?php if (isset($errors['umum'])): ?>
+        <p><strong><?= $errors['umum'] ?></strong></p>
+    <?php endif; ?>
+
     <form method="post" action="" novalidate>
+        <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">
+
         <p>
             <label for="nama">Nama</label><br>
             <input type="text" id="nama" name="nama" value="<?= $old['nama'] ?>" maxlength="100">
