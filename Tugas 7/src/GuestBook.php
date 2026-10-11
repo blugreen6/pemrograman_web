@@ -11,7 +11,7 @@ class GuestBook
         $this->pdo = $pdo;
     }
 
-    /* Menyimpan satu pesan */
+        /* Menyimpan satu pesan */
     public function save(string $nama, string $email, string $pesan): bool
     {
         $sql = "INSERT INTO buku_tamu (nama, email, pesan, tanggal_kirim)
