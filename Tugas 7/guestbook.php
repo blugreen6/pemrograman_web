@@ -29,16 +29,25 @@ try {
 
 $guestBook = new GuestBook($pdo);
 
+$errors = [];
+$old    = ['nama' => '', 'email' => '', 'pesan' => ''];
+
 /* Proses form */
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $guestBook->save(
-        (string) ($_POST['nama']  ?? ''),
-        (string) ($_POST['email'] ?? ''),
-        (string) ($_POST['pesan'] ?? '')
-    );
+    $old = [
+        'nama'  => (string) ($_POST['nama']  ?? ''),
+        'email' => (string) ($_POST['email'] ?? ''),
+        'pesan' => (string) ($_POST['pesan'] ?? ''),
+    ];
 
-    header('Location: ' . strtok($_SERVER['REQUEST_URI'], '?'));
-    exit;
+    $errors = $guestBook->validate($old['nama'], $old['email'], $old['pesan']);
+
+    if (!$errors) {
+        $guestBook->save($old['nama'], $old['email'], $old['pesan']);
+
+        header('Location: ' . strtok($_SERVER['REQUEST_URI'], '?'));
+        exit;
+    }
 }
 
 /* Ambil data untuk ditampilkan */
@@ -57,15 +66,18 @@ $messages = $guestBook->getAll();
     <form method="post" action="" novalidate>
         <p>
             <label for="nama">Nama</label><br>
-            <input type="text" id="nama" name="nama" maxlength="100">
+            <input type="text" id="nama" name="nama" value="<?= $old['nama'] ?>" maxlength="100">
+            <?php if (isset($errors['nama'])): ?><br><small><?= $errors['nama'] ?></small><?php endif; ?>
         </p>
         <p>
             <label for="email">Email</label><br>
-            <input type="email" id="email" name="email" maxlength="100">
+            <input type="email" id="email" name="email" value="<?= $old['email'] ?>" maxlength="100">
+            <?php if (isset($errors['email'])): ?><br><small><?= $errors['email'] ?></small><?php endif; ?>
         </p>
         <p>
             <label for="pesan">Pesan</label><br>
-            <textarea id="pesan" name="pesan" rows="4"></textarea>
+            <textarea id="pesan" name="pesan" rows="4"><?= $old['pesan'] ?></textarea>
+            <?php if (isset($errors['pesan'])): ?><br><small><?= $errors['pesan'] ?></small><?php endif; ?>
         </p>
         <button type="submit">Kirim Pesan</button>
     </form>
